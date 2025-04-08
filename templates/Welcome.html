@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="icon-circle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <h1>Welcome to Health Check</h1>
+            </div>
+            <div class="content">
+                <div class="info-box">
+                    <h2>Before we begin</h2>
+                    <ul>
+                        <li>This checkup is not a diagnosis</li>
+                        <li>This is for informational purposes only</li>
+                        <li>Your information remains private and anonymous</li>
+                    </ul>
+                </div>
+                <div class="agreement">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="terms-checkbox">
+                        <span class="checkmark"></span>
+                        I agree to the terms and conditions
+                    </label>
+                </div>
+                <button class="btn-primary" id="welcome-next" disabled>Continue</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const checkbox = document.getElementById('terms-checkbox');
+        const nextBtn = document.getElementById('welcome-next');
+
+        checkbox.addEventListener('change', () => {
+            nextBtn.disabled = !checkbox.checked;
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (checkbox.checked) {
+                window.location.href = "{{ url_for('information') }}";
+            }
+        });
+    </script>
+</body>
+</html>

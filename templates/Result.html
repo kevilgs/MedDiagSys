@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+
+        .result-section {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .result-section:hover {
+            transform: translateY(-4px);
+        }
+
+        .result-section h2 {
+            margin-top: 0;
+            font-size: 22px;
+            color: #6200ee;
+        }
+
+        .result-section h2 a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .result-section p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .button-29 {
+            display: block;
+            width: fit-content;
+            margin: 40px auto 0;
+            padding: 12px 24px;
+            background-color: #6200ee;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(98, 0, 238, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .button-29:hover {
+            background-color: #4500c3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Results</h1>
+        {% for disease, probability in results %}
+            <div class="result-section">
+                <h2>
+                    <a href="https://en.wikipedia.org/wiki/{{ disease | replace(' ', '_') }}" target="_blank">
+                        {{ disease }}
+                    </a>
+                </h2>
+                <p>Probability: {{ (probability * 100) | round(2) }}%</p>
+            </div>
+        {% endfor %}
+        <a href="{{ url_for('logout') }}" class="button-29">Go Back</a>
+    </div>
+</body>
+</html>
