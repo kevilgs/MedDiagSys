@@ -50,11 +50,11 @@ This project is a Medical Diagnosis System (MDS) that predicts diseases based on
 
 2. Open your browser and navigate to `http://localhost:5000` to access the web interface.
 
-## Docker Deployment (Optional)
+## Docker Deployment
 
-1. Build the Docker image:
+1. Pull the Docker image from Docker Hub:
    ```bash
-   docker build -t mds-app .
+   docker pull kevilgs/mds-app:latest
    ```
 
 2. Start the application using Docker Compose:
@@ -63,6 +63,31 @@ This project is a Medical Diagnosis System (MDS) that predicts diseases based on
    ```
 
 3. Access the application at `http://localhost:5000`.
+
+4. To run in detached mode:
+   ```bash
+   docker-compose up -d
+   ```
+
+5. To stop the containers:
+   ```bash
+   docker-compose down
+   ```
+
+### Building the Docker Image (For Development)
+
+If you need to modify and rebuild the Docker image:
+
+1. Build the Docker image:
+   ```bash
+   docker build -t kevilgs/mds-app:latest .
+   ```
+
+2. Push to Docker Hub (requires Docker Hub login):
+   ```bash
+   docker login
+   docker push kevilgs/mds-app:latest
+   ```
 
 ## Testing
 
