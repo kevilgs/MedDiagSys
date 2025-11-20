@@ -1,17 +1,38 @@
 import mysql.connector
 import os
+import sys
 
 def create_connection():
     # Railway provides MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE, MYSQLPORT
     # Fallback to local development values
-    conn = mysql.connector.connect(
-        host=os.environ.get('MYSQLHOST', os.environ.get('DB_HOST', 'localhost')),
-        user=os.environ.get('MYSQLUSER', os.environ.get('DB_USER', 'root')),
-        password=os.environ.get('MYSQLPASSWORD', os.environ.get('DB_PASSWORD', '1234')),
-        database=os.environ.get('MYSQLDATABASE', os.environ.get('DB_NAME', 'mds')),
-        port=int(os.environ.get('MYSQLPORT', '3306'))
-    )
-    return conn
+    
+    host = os.environ.get('MYSQLHOST', os.environ.get('DB_HOST', 'localhost'))
+    user = os.environ.get('MYSQLUSER', os.environ.get('DB_USER', 'root'))
+    password = os.environ.get('MYSQLPASSWORD', os.environ.get('DB_PASSWORD', '1234'))
+    database = os.environ.get('MYSQLDATABASE', os.environ.get('DB_NAME', 'mds'))
+    port = int(os.environ.get('MYSQLPORT', '3306'))
+    
+    # Debug: Print connection details (remove password for security)
+    print(f"Attempting to connect to MySQL:")
+    print(f"  Host: {host}")
+    print(f"  Port: {port}")
+    print(f"  User: {user}")
+    print(f"  Database: {database}")
+    
+    try:
+        conn = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database,
+            port=port
+        )
+        print("✓ MySQL connection successful!")
+        return conn
+    except mysql.connector.Error as err:
+        print(f"✗ MySQL connection failed: {err}")
+        print(f"  Error Code: {err.errno}")
+        sys.exit(1)
 
 def create_tables():
     conn = create_connection()
@@ -74,5 +95,5 @@ def add_user_info(user_id, age, overweight, smoke, injured, cholesterol, hyperte
     conn.commit()
     conn.close()
 
-# Initialize the database and create tables
-create_tables()
+# Don't auto-initialize on import - let app.py handle it
+# This prevents issues when environment variables aren't ready yet

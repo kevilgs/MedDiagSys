@@ -2,10 +2,13 @@ from flask import Flask, request, render_template, redirect, url_for, session, f
 import joblib
 import pandas as pd
 import numpy as np
-from database import add_user, get_user, add_user_info
+from database import add_user, get_user, add_user_info, create_tables
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+# Initialize database tables on startup
+create_tables()
 
 # Load the trained model
 model = joblib.load('model/logistic_regression_model.pkl')
