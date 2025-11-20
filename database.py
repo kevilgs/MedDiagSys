@@ -2,11 +2,14 @@ import mysql.connector
 import os
 
 def create_connection():
+    # Railway provides MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE, MYSQLPORT
+    # Fallback to local development values
     conn = mysql.connector.connect(
-        host=os.environ.get('DB_HOST', 'localhost'),
-        user=os.environ.get('DB_USER', 'root'),
-        password=os.environ.get('DB_PASSWORD', '1234'),
-        database=os.environ.get('DB_NAME', 'mds')
+        host=os.environ.get('MYSQLHOST', os.environ.get('DB_HOST', 'localhost')),
+        user=os.environ.get('MYSQLUSER', os.environ.get('DB_USER', 'root')),
+        password=os.environ.get('MYSQLPASSWORD', os.environ.get('DB_PASSWORD', '1234')),
+        database=os.environ.get('MYSQLDATABASE', os.environ.get('DB_NAME', 'mds')),
+        port=int(os.environ.get('MYSQLPORT', '3306'))
     )
     return conn
 
